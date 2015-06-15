@@ -8,9 +8,7 @@ $(function () {
         var keys = []
 
         for (key in invertedIndex) {
-            if (key.indexOf(query) >= 0) {
-                keys.push(key)
-            }
+            if (key.indexOf(query) >= 0) keys.push(key)
         }
 
         return keys
@@ -18,24 +16,35 @@ $(function () {
 
     $('.fn-search-btn').click(function () {
         var $results = $('.results')
+        // list of queries
         var queries = $('.query').val().toLowerCase().split(' ')
+        // list of lists of relevant tokens
         var results = _.map(queries, function (query) { return search(query) })
+        // intersection of tokens from each list
         var result = _.intersection.apply(_, results)
-        var visitedPaths = {}
+        var rankedResult = {}
         var path
         var id
 
+        // clear out the results div
         $results.html('')
 
+        // consolidate rankings
         result.forEach(function (key) {
             for (id in invertedIndex[key]) {
-                if (!visitedPaths[id]) {
-                    path = mapById[id]
-                    $results.append('<a href="/' + path + '">' + path.replace('.html', '.js') + '</a><br />')
-                    visitedPaths[id] = true
-                }
+                if (!rankedResult[id]) rankedResult[id] = 0
+                rankedResult[id] += invertedIndex[key][id]
             }
         })
+
+        // sort results on rank and render
+        _.chain(rankedResult)
+            .pairs()
+            .sortBy(function (resultData) { return -resultData[1] })
+            .each(function (resultData) {
+                path = mapById[resultData[0]]
+                $results.append('<a href="/' + path + '">' + path.replace('.html', '.js') + '</a><br />')
+            })
     })
 
 })
