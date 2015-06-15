@@ -18,11 +18,12 @@ $(function () {
 
     $('.fn-search-btn').click(function () {
         var $results = $('.results')
-        var query = $('.query').val().toLowerCase()
-        var result = search(query)
+        var queries = $('.query').val().toLowerCase().split(' ')
+        var results = _.map(queries, function (query) { return search(query) })
+        var result = _.intersection.apply(_, results)
+        var visitedPaths = {}
         var path
         var id
-        var visitedPaths = {}
 
         $results.html('')
 
