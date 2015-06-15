@@ -1,0 +1,23 @@
+{
+  "name": "doccolate",
+  "description": "Doc Generator",
+  "keywords": [
+    "documentation",
+    "docs",
+    "generator"
+  ],
+  "author": {
+    "name": "Justin Perler"
+  },
+  "version": "0.0.1",
+  "engines": {
+    "node": "*"
+  },
+  "devDependencies": {
+    "node-static": "^0.7.6",
+    "marked": ">= 0.2.7",
+    "fs-extra": ">= 0.6.0",
+    "underscore": ">= 1.0.0",
+    "highlight.js": ">= 8.0.x"
+  }
+}

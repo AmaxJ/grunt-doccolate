@@ -1,1 +1,1 @@
-# doccolate
+# grunt-doccolate
