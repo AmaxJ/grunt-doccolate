@@ -7,17 +7,16 @@
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <script src="/public/jquery.min.js"></script>
   <script src="/public/underscore.min.js"></script>
+  <script src="/public/typeahead.min.js"></script>
   <script src="/<%= jsFile %>"></script>
   <link rel="stylesheet" media="all" href="/<%= cssFile %>" />
 </head>
 <body>
+  <div class="typeahead-container">
+    <input class="typeahead" type="text" placeholder="Doccolate Search" />
+  </div>
   <div id="container">
     <div id="background"></div>
-
-    <input class="query" type="text" />
-    <button type="submit" class="fn-search-btn">Search</button>
-    <div class="results"></div>
-
     <% if (sources.length > 1) { %>
       <ul style="display:none" id="jump_to">
         <li>

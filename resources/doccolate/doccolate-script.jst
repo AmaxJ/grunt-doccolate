@@ -3,6 +3,12 @@ $(function () {
     var invertedIndex = <%= invertedIndex %>
     var mapById = <%= mapById %>
 
+    function changeExt (path, ext) {
+        var parts = path.split('.')
+
+        return _.first(parts, parts.length - 1) + ext
+    }
+
     function search (query) {
         var key
         var keys = []
@@ -14,37 +20,42 @@ $(function () {
         return keys
     }
 
-    $('.fn-search-btn').click(function () {
-        var $results = $('.results')
-        // list of queries
-        var queries = $('.query').val().toLowerCase().split(' ')
-        // list of lists of relevant tokens
-        var results = _.map(queries, function (query) { return search(query) })
-        // intersection of tokens from each list
-        var result = _.intersection.apply(_, results)
-        var rankedResult = {}
-        var path
-        var id
+    $('.typeahead').typeahead({
+        highlight: false,
+        minLength: 3,
+    }, {
+        limit: 20,
+        source: function (query, cb) {
+            var queries = query.toLowerCase().split(' ')
+            // list of lists of relevant tokens
+            var results = _.map(queries, function (query) { return search(query) })
+            // intersection of tokens from each list
+            var result = _.intersection.apply(_, results)
+            var rankedResult = {}
+            var path
+            var id
 
-        // clear out the results div
-        $results.html('')
-
-        // consolidate rankings
-        result.forEach(function (key) {
-            for (id in invertedIndex[key]) {
-                if (!rankedResult[id]) rankedResult[id] = 0
-                rankedResult[id] += invertedIndex[key][id]
-            }
-        })
-
-        // sort results on rank and render
-        _.chain(rankedResult)
-            .pairs()
-            .sortBy(function (resultData) { return -resultData[1] })
-            .each(function (resultData) {
-                path = mapById[resultData[0]]
-                $results.append('<a href="/' + path + '">' + path.replace('.html', '.js') + '</a><br />')
+            // consolidate rankings
+            result.forEach(function (key) {
+                for (id in invertedIndex[key]) {
+                    if (!rankedResult[id]) rankedResult[id] = 0
+                    rankedResult[id] += invertedIndex[key][id]
+                }
             })
+
+            // sort results on rank and render
+            var matches = _.chain(rankedResult)
+                .pairs()
+                .sortBy(function (resultData) { return -resultData[1] })
+                .map(function (resultData) {
+                    return changeExt(mapById[resultData[0]], '.js')
+                })
+                .value()
+
+            cb(matches)
+        }
+    }).bind('typeahead:select', function (ev, suggestion) {
+        window.location = '/' + changeExt(suggestion, '.html')
     })
 
 })
