@@ -1,5 +1,5 @@
 {
-  "name": "doccolate",
+  "name": "grunt-doccolate",
   "description": "Doc Generator",
   "keywords": [
     "documentation",
