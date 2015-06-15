@@ -3,7 +3,7 @@ var fs = require('fs-extra')
 var path = require('path')
 var marked = require('marked')
 var highlightjs = require('highlight.js')
-var indexer = require('../doccolate-indexer.js')
+var indexer = require('../lib/doccolate-indexer.js')
 var static = require('node-static')
 var http = require('http')
 
