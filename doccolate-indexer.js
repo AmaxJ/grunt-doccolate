@@ -24,11 +24,12 @@ function build (options, grunt) {
 
         // create a path lookup
         if (!mapByPath[docPath]) {
-            currentIndex = i
             mapByPath[docPath] = i
             mapById[i] = docPath
             i++
         }
+
+        currentIndex = mapByPath[docPath]
 
         // make file searchable by name
         invertedIndex[filepath] = {}
