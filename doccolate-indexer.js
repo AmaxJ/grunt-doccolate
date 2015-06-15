@@ -2,7 +2,7 @@ var _ = require('underscore')
 var path = require('path')
 var fs = require('fs-extra')
 
-var STOPWORDS = ['//', 'var', '||', 'return', '+', '-', '*', '/', '%', 'true', 'false', '?', ':']
+var STOPWORDS = ['//', 'var', '||', 'return', '+', '-', '*', '/', '%', 'true', 'false', '?', ':', '"', "'"]
 var SPLIT_REGEX = /[(){}_=\/\s'",.]+/
 var INDEX_FILENAME = 'invertedIndex.js'
 
