@@ -22,6 +22,11 @@
         <% if (!hasTitle) { %>
           <li id="title">
               <div class="annotation">
+                  <div class="breadcrumbs">
+                  <% _.each(breadcrumbs, function (breadcrumb) { %>
+                    <%= breadcrumb %> >
+                  <% }) %>
+                  </div>
                   <h1><%= title %></h1>
               </div>
           </li>

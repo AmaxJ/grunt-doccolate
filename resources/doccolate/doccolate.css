@@ -34,6 +34,10 @@ h1 {
   margin-top: 40px;
 }
 
+.annotation h1 {
+  margin-top: 5px;
+}
+
 hr {
   border: 0 none;
   border-top: 1px solid #e5e5ee;
@@ -458,4 +462,8 @@ ul.fn-directory .hide {
 ul.fn-directory .fn-folder {
   font-weight: bold;
   cursor: pointer;
+}
+
+.breadcrumbs {
+  font-size: 12px;
 }

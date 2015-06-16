@@ -158,6 +158,7 @@ function write (source, sections, config) {
         sections: sections,
         path: path,
         destination: destination,
+        breadcrumbs: path.dirname(source).split('/'),
     })
 
     console.log("doccolate: " + source + " -> " + (destination(source)))
