@@ -36,6 +36,16 @@ function document (options, grunt, callback) {
             directory: JSON.stringify(dir.build(config.sources)),
         }))
 
+        grunt.file.write(path.join(config.output, 'index.html'), config.template({
+            jsFile: path.basename(config.js, path.extname(config.js)) + '.js',
+            cssFile: path.basename(config.css),
+            title: config.title || 'Documentation',
+            hasTitle: false,
+            sections: [],
+            path: path,
+            breadcrumbs: [],
+        }))
+
         grunt.file.copy(config.css, path.join(config.output, path.basename(config.css)))
 
         if (fs.existsSync(config.public)) {
@@ -152,12 +162,10 @@ function write (source, sections, config) {
     html = config.template({
         jsFile: path.basename(config.js, path.extname(config.js)) + '.js',
         cssFile: path.basename(config.css),
-        sources: config.sources,
         title: title,
         hasTitle: hasTitle,
         sections: sections,
         path: path,
-        destination: destination,
         breadcrumbs: path.dirname(source).split('/'),
     })
 
