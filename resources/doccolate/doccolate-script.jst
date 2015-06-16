@@ -47,9 +47,7 @@ $(function () {
             var matches = _.chain(rankedResult)
                 .pairs()
                 .sortBy(function (resultData) { return -resultData[1] })
-                .map(function (resultData) {
-                    return changeExt(mapById[resultData[0]], '.js')
-                })
+                .map(function (resultData) { return mapById[resultData[0]] })
                 .value()
 
             cb(matches)

@@ -73,11 +73,8 @@ function parse (source, code, config) {
     var lang = getLanguage(source, config)
     var hasCode = docsText = codeText = ''
     var save = function() {
-        sections.push({
-            docsText: docsText,
-            codeText: codeText,
-        })
-        return hasCode = docsText = codeText = ''
+        sections.push({ docsText: docsText, codeText: codeText })
+        hasCode = docsText = codeText = ''
     }
 
     lines.forEach(function (line) {
