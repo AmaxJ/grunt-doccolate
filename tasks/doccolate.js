@@ -33,6 +33,7 @@ function document (options, grunt, callback) {
         grunt.file.write(jsTemplatePath, jsTemplate({
             invertedIndex: JSON.stringify(index.invertedIndex),
             mapById: JSON.stringify(index.mapById),
+            directory: JSON.stringify(dir.build(config.sources)),
         }))
 
         grunt.file.copy(config.css, path.join(config.output, path.basename(config.css)))
@@ -157,7 +158,6 @@ function write (source, sections, config) {
         sections: sections,
         path: path,
         destination: destination,
-        directory: dir.build(config.sources),
     })
 
     console.log("doccolate: " + source + " -> " + (destination(source)))

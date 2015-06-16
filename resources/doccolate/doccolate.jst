@@ -17,9 +17,7 @@
   </div>
   <div id="container">
     <div id="background"></div>
-    <% _.each(directory.folders.src.files, function (file) { %>
-      <a href="/<%= _.values(file)[0] %>"><%= _.keys(file)[0] %></a><br />
-    <% }) %>
+    <ul class="fn-directory"></ul>
     <ul class="sections">
         <% if (!hasTitle) { %>
           <li id="title">

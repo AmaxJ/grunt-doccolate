@@ -2,6 +2,7 @@ $(function () {
 
     var invertedIndex = <%= invertedIndex %>
     var mapById = <%= mapById %>
+    var directory = <%= directory %>
 
     function changeExt (path, ext) {
         var parts = path.split('.')
@@ -56,4 +57,38 @@ $(function () {
         window.location = '/' + changeExt(suggestion, '.html')
     })
 
+    var $directory = $('.fn-directory')
+
+    function renderDirectory ($el, dir, isRoot) {
+        if (_.isUndefined(isRoot)) isRoot = true
+
+        var folders = []
+        var $folderEl
+        var $files
+
+        // recursively render folders
+        _.each(dir.folders, function (childDir, folder) {
+            $folderEl = $('<ul class="' + (!isRoot ? 'hide' : '') + '"><li class="fn-folder"><span class="fn-symbol">+</span> ' + folder + '</li></ul>')
+            $el.append($folderEl.wrap('<li />').parent())
+
+            renderDirectory($folderEl, childDir, false)
+        })
+
+        // render files
+        $files = $('<ul class="' + (!isRoot ? 'hide' : '') + '"></ul>')
+        _.each(dir.files, function (file) {
+            $files.append('<li><a href="/' + _.values(file)[0] + '">' + _.keys(file)[0] + '</a></li>')
+        })
+        $el.append($files.wrap('<li />').parent())
+    }
+
+    renderDirectory($directory, directory)
+
+    $('.fn-folder').click(function () {
+        var $this = $(this)
+        var $symbol = $this.find('.fn-symbol')
+
+        $symbol.html($symbol.text() === '+' ? '-' : '+')
+        $this.parent().find('> li > ul').toggle()
+    })
 })
