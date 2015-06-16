@@ -7,7 +7,9 @@ $(function () {
     function changeExt (path, ext) {
         var parts = path.split('.')
 
-        return _.first(parts, parts.length - 1) + ext
+        parts[parts.length - 1] = ext
+
+        return parts.join('.')
     }
 
     function search (query) {
@@ -54,7 +56,7 @@ $(function () {
             cb(matches)
         }
     }).bind('typeahead:select', function (ev, suggestion) {
-        window.location = '/' + changeExt(suggestion, '.html')
+        window.location = '/' + changeExt(suggestion, 'html')
     })
 
     var $directory = $('.fn-directory')
