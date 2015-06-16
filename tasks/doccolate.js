@@ -3,7 +3,8 @@ var fs = require('fs-extra')
 var path = require('path')
 var marked = require('marked')
 var highlightjs = require('highlight.js')
-var indexer = require('../lib/doccolate-indexer.js')
+var indexer = require('../lib/doccolate-indexer')
+var dir = require('../lib/doccolate-dir')
 var static = require('node-static')
 var http = require('http')
 
@@ -156,6 +157,7 @@ function write (source, sections, config) {
         sections: sections,
         path: path,
         destination: destination,
+        directory: dir.build(config.sources),
     })
 
     console.log("doccolate: " + source + " -> " + (destination(source)))
