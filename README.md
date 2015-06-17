@@ -4,7 +4,7 @@ Doccolate is a documentation generator that adds token based search with typeahe
 The generator portion is based off of [docco](https://github.com/jashkenas/docco).
 
 ### Why another documentation generator?
-I gave [groc](http://nevir.github.io/groc/) a fair shot, but the search functionality was too basic.
+I gave [groc](http://nevir.github.io/groc/) a fair shot, but the search functionality was limited.
 
 ### Implementation
 I created an inverted index which maps tokens to files, with their respective frequencies in each file. The frequencies enabled a basic ranking system. You're able to search by token, filename and can include multiple terms in a query. It uses an `AND` filter when combining index results.
