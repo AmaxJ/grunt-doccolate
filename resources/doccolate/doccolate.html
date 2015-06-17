@@ -31,8 +31,7 @@
               </div>
           </li>
         <% } %>
-        <% for (var i=0, l=sections.length; i<l; i++) { %>
-        <% var section = sections[i]; %>
+        <% _.each(sections, function (section, i) { %>
         <li id="section-<%= i + 1 %>">
             <div class="annotation">
               <% heading = section.docsHtml.match(/^\s*<(h\d)>/) %>
@@ -45,7 +44,7 @@
             <div class="content"><%= section.codeHtml %></div>
             <% } %>
         </li>
-        <% } %>
+        <% }) %>
     </ul>
   </div>
 </body>

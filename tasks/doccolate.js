@@ -84,16 +84,54 @@ function parse (source, code, config) {
     var lines = code.split('\n')
     var lang = getLanguage(source, config)
     var hasCode = docsText = codeText = ''
+    var multilineOpen = false
+    var openTagFound
+    var closeTagFound
+    var closeSeen
+    var isValidMultiline = false
     var save = function() {
         sections.push({ docsText: docsText, codeText: codeText })
         hasCode = docsText = codeText = ''
     }
 
-    lines.forEach(function (line) {
-        if (line.match(lang.commentMatcher) && !line.match(lang.commentFilter)) {
+    lines.forEach(function (line, i) {
+        if (lang.multiline) {
+            openTagFound = line.indexOf(lang.open) >= 0
+            // only register closing tags when the multiline open flag is true
+            closeTagFound = multilineOpen && line.indexOf(lang.close) >= 0
+
+            // prevent opening when a line both opens and closes
+            if (openTagFound && !closeTagFound) multilineOpen = true
+            if (closeTagFound) multilineOpen = false
+
+            if (multilineOpen) {
+                // if we're open, make sure we close before we open again
+                lines.slice(i + 1).forEach(function (anotherLine) {
+                    if (anotherLine.indexOf(lang.close) >= 0) closeSeen = true
+                    // if we are opening again before we've closed, ignore multiline
+                    if (anotherLine.indexOf(lang.open) >= 0 && !closeSeen) multilineOpen = false
+                })
+                // if if we're still open and there was never a close, ignore multiline
+                if (multilineOpen && !closeSeen) multilineOpen = false
+                // reset
+                closeSeen = false
+            }
+
+            // if we're still open or we're closing (and not also opening)
+            isValidMultiline = multilineOpen || (closeTagFound && !openTagFound)
+        }
+
+        if ((line.match(lang.commentMatcher) || isValidMultiline) && !line.match(lang.commentFilter)) {
             if (hasCode) save()
-            line = line.replace(lang.commentMatcher, '')
+            if (multilineOpen || closeTagFound) {
+                line = line.replace(lang.open, '')
+                line = line.replace(lang.close, '')
+            } else {
+                line = line.replace(lang.commentMatcher, '')
+            }
             docsText += line + '\n'
+            // reset
+            isValidMultiline = false
             if (/^(---+|===+)$/.test(line)) save()
         } else {
             hasCode = true
@@ -189,9 +227,9 @@ function configure (options) {
         config.layout = null
     } else {
         dir = config.layout = path.join(__dirname, '..', 'resources', config.layout)
-        config.template = path.join(dir, 'doccolate.jst')
+        config.template = path.join(dir, 'doccolate.html')
         config.css = options.css || path.join(dir, 'doccolate.css')
-        config.js = options.js || path.join(dir, 'doccolate-script.jst')
+        config.js = options.js || path.join(dir, 'doccolate.js')
         config.public = path.join(dir, 'public')
     }
 

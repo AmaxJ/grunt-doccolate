@@ -26,7 +26,7 @@
   ".hs":          {"name": "haskell", "symbol": "--"},
   ".ini":         {"name": "ini", "symbol": ";"},
   ".jade":        {"name": "jade", "symbol": "//-"},
-  ".js":          {"name": "javascript", "symbol": "//"},
+  ".js":          {"name": "javascript", "symbol": "//", "multiline": true, "open": "/*", "close": "*/" },
   ".jsm":         {"name": "javascript", "symbol": "//"},
   ".jsx":         {"name": "javascript", "symbol": "//"},
   ".java":        {"name": "java", "symbol": "//"},
