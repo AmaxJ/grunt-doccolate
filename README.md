@@ -10,14 +10,9 @@ I gave [groc](http://nevir.github.io/groc/) a fair shot, but the search function
 I created an inverted index which maps tokens to files, with their respective frequencies in each file. The frequencies enabled a basic ranking system. You're able to search by token, filename and can include multiple terms in a query. It uses an `AND` filter when combining index results.
 
 ### Installing grunt-doccolate
-Add the following to your package.json file under dependencies
-```
-"grunt-doccolate": "jperler/grunt-doccolate"
-```
-
 Install the lib
 ```bash
-$ npm install
+$ npm install grunt-doccolate --save-dev
 ```
 
 Update your Gruntfile
