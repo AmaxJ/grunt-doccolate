@@ -24,7 +24,7 @@ Update your Gruntfile
 ```
 doccolate: {
     ui: {
-        src: ['src/**/*.js', 'src/**/*.jsx'],
+        src: ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.md'],
         options: {
             output: 'docs/',
             port: 8084,
