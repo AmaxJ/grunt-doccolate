@@ -6,9 +6,7 @@
     "docs",
     "generator"
   ],
-  "author": {
-    "name": "Justin Perler"
-  },
+  "author": "Justin Perler",
   "version": "0.0.1",
   "engines": {
     "node": "*"
@@ -19,5 +17,19 @@
     "fs-extra": ">= 0.6.0",
     "underscore": ">= 1.0.0",
     "highlight.js": ">= 8.0.x"
-  }
+  },
+  "main": "Gruntfile.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jperler/grunt-doccolate.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jperler/grunt-doccolate/issues"
+  },
+  "homepage": "https://github.com/jperler/grunt-doccolate"
 }
