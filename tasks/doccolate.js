@@ -7,6 +7,7 @@ var indexer = require('../lib/doccolate-indexer')
 var dir = require('../lib/doccolate-dir')
 var static = require('node-static')
 var http = require('http')
+var open = require('open')
 
 var LANGUAGES = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'resources', 'languages.json')))
 var VERSION = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'))).version
@@ -283,11 +284,13 @@ function getLanguage (source, config) {
 
 function startServer (options) {
     var fileServer = new static.Server(options.output)
+    var url = 'http://localhost:' + options.port
 
     http.createServer(function (request, response) {
         fileServer.serve(request, response)
     }).on('listening', function () {
-        console.log("doccolate: server running on http://localhost:" + options.port)
+        console.log('doccolate: server running on ' + url)
+        open(url)
     }).listen(options.port)
 }
 
